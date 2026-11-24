@@ -1,0 +1,47 @@
+# Render Blueprint. Secrets marked sync:false are entered once in the dashboard.
+databases:
+  - name: rashaross-db
+    plan: free              # free DBs expire after 30 days: use basic-256mb for production
+    databaseName: rashaross
+    user: rashaross
+
+services:
+  - type: web
+    name: rashaross
+    runtime: python
+    plan: free              # free web services sleep when idle
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    healthCheckPath: /healthz
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase: {name: rashaross-db, property: connectionString}
+      - key: MAIL_USERNAME
+        sync: false          # sender email address
+      - key: MAIL_PASSWORD
+        sync: false          # Gmail app password
+      - key: DIGEST_RECIPIENT
+        sync: false          # where the weekly subscriber list is sent
+
+  - type: cron
+    name: weekly-digest
+    runtime: python
+    plan: starter            # cron jobs are a paid instance type on Render
+    schedule: "0 8 * * 0"    # Sundays 08:00 UTC
+    buildCommand: pip install -r requirements.txt
+    startCommand: python scripts/weekly_digest.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: DATABASE_URL
+        fromDatabase: {name: rashaross-db, property: connectionString}
+      - key: MAIL_USERNAME
+        sync: false
+      - key: MAIL_PASSWORD
+        sync: false
+      - key: DIGEST_RECIPIENT
+        sync: false
