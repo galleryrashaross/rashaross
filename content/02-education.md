@@ -1,6 +1,6 @@
 ## Education
 
-![Rasha Ross, abstract expressionist painter]([[(https://raw.githubusercontent.com/galleryrashaross/rashaross/refs/heads/main/IMG_3682.jpeg]))
+![Rasha Ross, Abstract Expressionism Painter](https://raw.githubusercontent.com/galleryrashaross/rashaross/refs/heads/main/IMG_3682.jpeg)
 
 **Concordia University** — Montreal, Quebec, Canada
 
