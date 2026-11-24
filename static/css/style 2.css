@@ -1,0 +1,28 @@
+:root { --ink:#1c1c1c; --charcoal:#2b2b2b; --paper:#fff; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--paper); color:var(--ink);
+  font-family:'Jost',sans-serif; font-weight:200; line-height:1.9; letter-spacing:.02em; }
+header { text-align:center; padding:6rem 1rem 3rem; }
+h1 { font-family:'Cormorant Garamond',serif; font-weight:300; font-size:clamp(2.6rem,7vw,5rem);
+  letter-spacing:.18em; text-transform:uppercase; margin:0; }
+.tag { letter-spacing:.4em; text-transform:uppercase; font-size:.8rem; }
+main { max-width:760px; margin:0 auto; padding:0 1.5rem; }
+section { margin:4rem 0; }
+h2 { font-family:'Cormorant Garamond',serif; font-weight:300; font-size:1.8rem;
+  letter-spacing:.12em; text-transform:uppercase; display:inline-block;
+  background:var(--charcoal); color:#fff; padding:.2rem 1rem; }
+h3 { font-family:'Cormorant Garamond',serif; font-weight:300; font-size:1.4rem;
+  border-left:6px solid var(--charcoal); padding-left:.8rem; margin-top:2rem; }
+strong { font-weight:300; background:linear-gradient(transparent 60%, rgba(43,43,43,.18) 60%); }
+ul { padding-left:1.2rem; }
+form { display:flex; gap:.6rem; flex-wrap:wrap; }
+input { flex:1; min-width:220px; padding:.8rem 1rem; border:1px solid var(--charcoal);
+  font:inherit; background:#fff; }
+button { padding:.8rem 2rem; background:var(--charcoal); color:#fff; border:0;
+  font:inherit; letter-spacing:.2em; text-transform:uppercase; cursor:pointer; }
+button:hover { background:#000; }
+footer { text-align:center; padding:3rem 0; font-size:.8rem; letter-spacing:.2em; }
+
+/* Artist portrait inside markdown sections */
+section img { display:block; width:100%; max-width:180px; height:auto; margin:1.5rem 0 2rem;
+  filter:grayscale(1); border:1px solid var(--charcoal); }
