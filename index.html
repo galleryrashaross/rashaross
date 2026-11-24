@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ artist }} | Abstract Expressionism</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&family=Jost:wght@200;300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header>
+    <h1>{{ artist }}</h1>
+    <p class="tag">Abstract Expressionism</p>
+  </header>
+  <main>
+    {% for s in sections %}
+    <section id="{{ s.id }}">{{ s.html | safe }}</section>
+    {% endfor %}
+    <section id="subscribe">
+      <h2>Subscribe</h2>
+      <p>New work, exhibitions and studio notes.</p>
+      <form id="sub-form">
+        <input type="email" name="email" placeholder="Your email address" required>
+        <button type="submit">Subscribe</button>
+      </form>
+      <p id="sub-msg" role="status"></p>
+    </section>
+  </main>
+  <footer>&copy; {{ artist }}</footer>
+  <script>
+    document.getElementById("sub-form").addEventListener("submit", async e => {
+      e.preventDefault();
+      const r = await fetch("/subscribe", {method: "POST", body: new FormData(e.target)});
+      const d = await r.json();
+      document.getElementById("sub-msg").textContent = d.message;
+      if (d.ok) e.target.reset();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: rashaross}
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: rashaross}}
+  template:
+    metadata: {labels: {app: rashaross}}
+    spec:
+      containers:
+        - name: web
+          image: rashaross:latest
+          ports: [{containerPort: 8000}]
+          envFrom: [{secretRef: {name: rashaross-secrets}}]
+          readinessProbe: {httpGet: {path: /healthz, port: 8000}}
+          volumeMounts: [{name: data, mountPath: /app/data}]
+      volumes:
+        - name: data
+          persistentVolumeClaim: {claimName: rashaross-data}
+---
+apiVersion: v1
+kind: Service
+metadata: {name: rashaross}
+spec:
+  type: LoadBalancer
+  selector: {app: rashaross}
+  ports: [{port: 80, targetPort: 8000}]

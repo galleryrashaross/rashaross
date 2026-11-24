@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata: {name: weekly-digest}
+spec:
+  schedule: "0 8 * * 0"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          # Same RWO volume as the web pod: affinity keeps both on one node
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector: {matchLabels: {app: rashaross}}
+                  topologyKey: kubernetes.io/hostname
+          containers:
+            - name: digest
+              image: rashaross:latest
+              command: ["python3", "scripts/weekly_digest.py"]
+              envFrom: [{secretRef: {name: rashaross-secrets}}]
+              volumeMounts: [{name: data, mountPath: /app/data}]
+          volumes:
+            - name: data
+              persistentVolumeClaim: {claimName: rashaross-data}
