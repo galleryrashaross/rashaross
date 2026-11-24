@@ -22,3 +22,7 @@ button { padding:.8rem 2rem; background:var(--charcoal); color:#fff; border:0;
   font:inherit; letter-spacing:.2em; text-transform:uppercase; cursor:pointer; }
 button:hover { background:#000; }
 footer { text-align:center; padding:3rem 0; font-size:.8rem; letter-spacing:.2em; }
+
+/* Artist portrait inside markdown sections */
+section img { display:block; width:100%; max-width:360px; height:auto; margin:1.5rem 0 2rem;
+  filter:grayscale(.15); border:1px solid var(--charcoal); }
